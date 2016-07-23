@@ -13,7 +13,12 @@ description = {
     license = 'MIT'
 }
 
-dependencies = { 'torch >= 7.0', 'moses', 'argcheck' }
+dependencies = {
+   'torch >= 7.0',
+   'argcheck',
+   'moses',
+   'torchzlib'
+}
 
 build = {
     type = 'builtin',
