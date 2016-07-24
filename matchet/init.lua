@@ -18,5 +18,6 @@ matchet.union = argcheck{
 
 require 'matchet.iter'
 require 'matchet.data'
+require 'matchet.seg'
 
 return matchet

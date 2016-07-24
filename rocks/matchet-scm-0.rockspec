@@ -26,6 +26,7 @@ build = {
         ['matchet.env'] = 'matchet/env.lua',
         ['matchet.init'] = 'matchet/init.lua',
         ['matchet.iter'] = 'matchet/iter.lua',
-        ['matchet.data'] = 'matchet/data.lua'
+        ['matchet.data'] = 'matchet/data.lua',
+        ['matchet.seg'] = 'matchet/seg.lua'
     }
 }
