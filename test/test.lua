@@ -1,6 +1,8 @@
 local argcheck = require 'argcheck'
 local matchet = require 'matchet'
 
+print(matchet)
+print(matchet.iter)
 local tester = torch.Tester()
 
 local tests = torch.TestSuite()
