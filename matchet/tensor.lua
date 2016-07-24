@@ -21,6 +21,7 @@ matchet.unique = argcheck{
          ret[i] = k
          i = i + 1
       end
-      return torch.sort(ret)
+      ret = torch.sort(ret)
+      return ret
    end
 }
