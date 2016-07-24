@@ -18,6 +18,7 @@ matchet.union = argcheck{
 
 require 'matchet.iter'
 require 'matchet.data'
+require 'matchet.priorityqueue'
 require 'matchet.seg'
 
 return matchet

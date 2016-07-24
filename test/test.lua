@@ -1,3 +1,4 @@
+local _ = require 'moses'
 local argcheck = require 'argcheck'
 local matchet = require 'matchet'
 
@@ -46,6 +47,24 @@ function tests.neighborpairs()
                                     {4, 5}})
 
    tester:eq(matchet.neighborpairs(x), target)
+end
+
+function tests.priorityqueue()
+   local pq = matchet.PriorityQueue()
+   local v = { }
+   _.each(_.shuffle(_.range(1, 100)), function(i, v)
+      pq:insert(v)
+   end)
+   tester:eq(pq:size(), 100)
+
+   local popresult = { }
+   local peekresult = { }
+   for i=1,100 do
+      _.push(peekresult, pq:peek())
+      _.push(popresult, pq:pop())
+   end
+   tester:eq(peekresult, _.reverse(_.range(1, 100)))
+   tester:eq(popresult, _.reverse(_.range(1, 100)))
 end
 
 tester:add(tests):run()
