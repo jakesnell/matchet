@@ -6,7 +6,7 @@ local n = 2000000
 local pq = matchet.PriorityQueue()
 t = torch.Timer()
 for i=1,n do
-   pq:insert(math.random())
+   pq:insert(i, math.random())
 end
 while not pq:isempty() do
    pq:peek()

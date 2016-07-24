@@ -51,11 +51,16 @@ end
 
 function tests.priorityqueue()
    local pq = matchet.PriorityQueue()
-   local v = { }
+
+   local vals = { }
    _.each(_.shuffle(_.range(1, 100)), function(i, v)
-      pq:insert(v)
+      vals[i] = math.random()
+      pq:insert(i, vals[i])
    end)
    tester:eq(pq:size(), 100)
+
+   -- find correct order of items to be popped
+   local inds = _.reverse(select(2, torch.sort(torch.Tensor(vals))):totable())
 
    local popresult = { }
    local peekresult = { }
@@ -63,8 +68,9 @@ function tests.priorityqueue()
       _.push(peekresult, pq:peek())
       _.push(popresult, pq:pop())
    end
-   tester:eq(peekresult, _.reverse(_.range(1, 100)))
-   tester:eq(popresult, _.reverse(_.range(1, 100)))
+   tester:eq(pq:isempty(), true)
+   tester:eq(peekresult, inds)
+   tester:eq(popresult, inds)
 end
 
 tester:add(tests):run()
