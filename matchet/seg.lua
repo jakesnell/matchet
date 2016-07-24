@@ -12,16 +12,16 @@ matchet.neighborpairs = argcheck{
       local rstride = x:stride(1)
       local cstride = x:stride(2)
       local xdata = torch.data(x)
+
+      -- check left-right pairs
       for i=1,x:size(1) do
          for j=1,x:size(2)-1 do
-            local cur = xdata[(i-1)*rstride+(j-1)*cstride]
-
-            -- check left-right pairs
+            local left = xdata[(i-1)*rstride+(j-1)*cstride]
             local right = xdata[(i-1)*rstride+(j)*cstride]
 
-            if cur ~= right then
-               minind = math.min(tonumber(cur), tonumber(right))
-               maxind = math.max(tonumber(cur), tonumber(right))
+            if left ~= right then
+               minind = math.min(tonumber(left), tonumber(right))
+               maxind = math.max(tonumber(left), tonumber(right))
                if not neighbors[minind] then
                   neighbors[minind] = { }
                end
@@ -30,15 +30,15 @@ matchet.neighborpairs = argcheck{
          end
       end
 
+      -- check top-bottom pairs
       for i=1,x:size(1)-1 do
          for j=1,x:size(2) do
-            local cur = xdata[(i-1)*rstride+(j-1)*cstride]
-            -- check top-bottom pairs
+            local top = xdata[(i-1)*rstride+(j-1)*cstride]
             local bottom = xdata[(i)*rstride+(j-1)*cstride]
 
-            if cur ~= bottom then
-               minind = math.min(tonumber(cur), tonumber(bottom))
-               maxind = math.max(tonumber(cur), tonumber(bottom))
+            if top ~= bottom then
+               minind = math.min(tonumber(top), tonumber(bottom))
+               maxind = math.max(tonumber(top), tonumber(bottom))
                if not neighbors[minind] then
                   neighbors[minind] = { }
                end
