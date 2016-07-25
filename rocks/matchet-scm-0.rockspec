@@ -29,6 +29,7 @@ build = {
       ['matchet.iter'] = 'matchet/iter.lua',
       ['matchet.data'] = 'matchet/data.lua',
       ['matchet.priorityqueue'] = 'matchet/priorityqueue.lua',
+      ['matchet.set'] = 'matchet/set.lua',
       ['matchet.tensor'] = 'matchet/tensor.lua',
       ['matchet.seg'] = 'matchet/seg.lua'
    }
