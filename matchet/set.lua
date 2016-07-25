@@ -71,16 +71,19 @@ function Set:__add(other)
    return ret
 end
 
-function Set:__tostring()
-   local keys = { }
-   for k,v in pairs(self.s) do
-      _.push(keys, k)
+function Set:__sub(other)
+   -- set difference
+   local ret = self:copy()
+
+   for k,v in pairs(other.s) do
+      ret:remove(k)
    end
 
-   return 'Set{' .. _.join(_.sort(keys), ',') .. '}'
+   return ret
 end
 
 function Set:__mul(other)
+   -- set intersection
    local ret = Set()
    for k,v in pairs(self.s) do
       if other:contains(k) then
@@ -88,6 +91,15 @@ function Set:__mul(other)
       end
    end
    return ret
+end
+
+function Set:__tostring()
+   local keys = { }
+   for k,v in pairs(self.s) do
+      _.push(keys, k)
+   end
+
+   return 'Set{' .. _.join(_.sort(keys), ',') .. '}'
 end
 
 matchet.Set = Set

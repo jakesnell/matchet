@@ -11,6 +11,12 @@ function tests.set()
    tester:eq(tostring(s), 'Set{1,2,3}')
    tester:eq(s == Set{1, 2, 3}, true)
 
+   -- copy
+   local s2 = s:copy()
+   s2:remove(2)
+   tester:eq(s2 == Set{1,3}, true)
+   tester:eq(s == Set{1,2,3}, true)
+
    -- union
    tester:eq(s + Set{4, 7, 10} == Set{1, 2, 3, 4, 7, 10}, true)
 
@@ -26,4 +32,7 @@ function tests.set()
    s:remove(2)
    tester:eq(s == Set{1,3,8}, true)
    tester:eq(s:size(), 3)
+
+   -- set difference
+   tester:eq(Set{1, 3, 4, 5} - Set{3, 5, 9, 11} == Set{1, 4}, true)
 end
