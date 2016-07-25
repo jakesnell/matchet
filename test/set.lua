@@ -35,4 +35,11 @@ function tests.set()
 
    -- set difference
    tester:eq(Set{1, 3, 4, 5} - Set{3, 5, 9, 11} == Set{1, 4}, true)
+
+   -- iteration
+   local scopy = Set()
+   for k in s:items() do
+      scopy:insert(k)
+   end
+   tester:eq(s == scopy, true)
 end

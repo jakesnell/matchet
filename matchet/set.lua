@@ -93,6 +93,19 @@ function Set:__mul(other)
    return ret
 end
 
+function Set:items()
+   local iter = function()
+      for k,v in pairs(self.s) do
+         coroutine.yield(k)
+      end
+   end
+   local co = coroutine.create(iter)
+   return function()
+      local code, res = coroutine.resume(co)
+      return res
+   end
+end
+
 function Set:__tostring()
    local keys = { }
    for k,v in pairs(self.s) do
