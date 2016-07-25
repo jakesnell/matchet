@@ -115,4 +115,12 @@ function Set:__tostring()
    return 'Set{' .. _.join(_.sort(keys), ',') .. '}'
 end
 
+function Set:totable()
+   local ret = { }
+   for k in self:items() do
+      _.push(ret, k)
+   end
+   return _.sort(ret)
+end
+
 matchet.Set = Set

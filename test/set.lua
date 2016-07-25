@@ -42,4 +42,7 @@ function tests.set()
       scopy:insert(k)
    end
    tester:eq(s == scopy, true)
+
+   -- totable
+   tester:eq(Set{1, 5, 4, 3, 5}:totable(), {1, 3, 4, 5})
 end
