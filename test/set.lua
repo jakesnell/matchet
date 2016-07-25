@@ -14,6 +14,9 @@ function tests.set()
    -- union
    tester:eq(s + Set{4, 7, 10} == Set{1, 2, 3, 4, 7, 10}, true)
 
+   -- intersection
+   tester:eq(Set{1, 3, 4, 5} * Set{3, 4, 9, 11} == Set{3, 4}, true)
+
    -- insertion
    s:insert(8)
    tester:eq(s == Set{1,2,3,8}, true)

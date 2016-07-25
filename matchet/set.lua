@@ -31,6 +31,14 @@ function Set:size()
    return #self.s
 end
 
+function Set:contains(k)
+   if self.s[k] then
+      return true
+   else
+      return false
+   end
+end
+
 function Set:copy()
    local ret = Set()
    for k,v in pairs(self.s) do
@@ -45,7 +53,7 @@ end
 
 function Set:_onesidedeq(other)
    for k,v in pairs(self.s) do
-      if not other.s[k] then
+      if not other:contains(k) then
          return false
       end
    end
@@ -65,11 +73,21 @@ end
 
 function Set:__tostring()
    local keys = { }
-   for k, v in pairs(self.s) do
+   for k,v in pairs(self.s) do
       _.push(keys, k)
    end
 
    return 'Set{' .. _.join(_.sort(keys), ',') .. '}'
+end
+
+function Set:__mul(other)
+   local ret = Set()
+   for k,v in pairs(self.s) do
+      if other:contains(k) then
+         ret:insert(k)
+      end
+   end
+   return ret
 end
 
 matchet.Set = Set
