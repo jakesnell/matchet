@@ -3,6 +3,38 @@ local tds = require 'tds'
 
 local matchet = require 'matchet.env'
 
+matchet.contingency = argcheck{
+   {name='x', type='torch.*Tensor',
+    doc='first matrix to compute contingency of',
+    check=function(x) return x:isContiguous() end},
+   {name='y', type='torch.*Tensor',
+    doc='second matrix to compute contingency of',
+    check=function(y) return y:isContiguous() end},
+   call = function(x, y)
+      assert(x:isSameSizeAs(y))
+      local xunique = matchet.unique(x)
+      assert(xunique:min() >= 1)
+      local n = xunique:max()
+
+      local yunique = matchet.unique(y)
+      assert(yunique:min() >= 1)
+      local m = yunique:max()
+
+      local ret = torch.zeros(n, m):long()
+
+      local xdata = torch.data(x)
+      local ydata = torch.data(y)
+      local r, c
+      local ind
+      for i=0,x:nElement()-1 do
+         local r = tonumber(xdata[i])
+         local c = tonumber(ydata[i])
+         ret[{r, c}] = ret[{r, c}] + 1
+      end
+      return ret
+   end
+}
+
 matchet.unique = argcheck{
    {name='x',
     type='torch.*Tensor',
