@@ -21,15 +21,17 @@ matchet.contingency = argcheck{
       local m = yunique:max()
 
       local ret = torch.zeros(n, m):long()
+      local retdata = torch.data(ret)
+      local rowstride = ret:stride(1)
+      local colstride = ret:stride(2)
 
       local xdata = torch.data(x)
       local ydata = torch.data(y)
       local r, c
       local ind
       for i=0,x:nElement()-1 do
-         local r = tonumber(xdata[i])
-         local c = tonumber(ydata[i])
-         ret[{r, c}] = ret[{r, c}] + 1
+         ind = (xdata[i] - 1) * rowstride + (ydata[i] - 1) * colstride
+         retdata[ind] = retdata[ind] + 1
       end
       return ret
    end
