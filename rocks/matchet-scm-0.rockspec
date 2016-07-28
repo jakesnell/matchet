@@ -18,6 +18,7 @@ dependencies = {
    'argcheck',
    'classic',
    'moses',
+   'tds',
    'torchzlib'
 }
 
