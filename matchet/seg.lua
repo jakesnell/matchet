@@ -49,10 +49,11 @@ matchet.neighborpairs = argcheck{
 
       local ret = { }
       _.each(neighbors, function(i, v)
-         _.each(v, function(j)
+         k = _.sort(_.keys(v))
+         _.each(k, function(j, n)
             local row = torch.LongTensor(1, 2)
             row[{1,1}] = i
-            row[{1,2}] = j
+            row[{1,2}] = n
             _.push(ret, row)
          end)
       end)
