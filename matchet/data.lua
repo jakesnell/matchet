@@ -8,6 +8,8 @@ matchet.loadz = function(filename, path)
    return matchet.deepmap(x, function(v)
       if torch.typename(v) == 'torch.CompressedTensor' then
          return v:decompress()
+      else
+         return v
       end
    end)
 end
