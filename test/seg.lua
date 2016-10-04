@@ -1,6 +1,8 @@
 local matchet = require 'matchet'
 
-function tests.neighborpairs()
+local tests = { }
+
+function tests.segNeighborpairs(tester)
    local x = torch.LongTensor({{1, 1, 1, 2, 2},
                                {1, 1, 2, 2, 3},
                                {1, 2, 2, 4, 4},
@@ -15,3 +17,5 @@ function tests.neighborpairs()
 
    tester:eq(matchet.neighborpairs(x), target)
 end
+
+return tests

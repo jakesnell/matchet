@@ -1,6 +1,8 @@
 local matchet = require 'matchet'
 
-function tests.contingency()
+local tests = { }
+
+function tests.tensorContingency(tester)
    local x = torch.LongTensor({{1, 2, 2, 3},
                                {5, 5, 6, 5}})
    local y = torch.LongTensor({{2, 2, 1, 4},
@@ -14,14 +16,14 @@ function tests.contingency()
    tester:eq(matchet.contingency(x, y), expected)
 end
 
-function tests.unique()
+function tests.tensorUnique(tester)
    local x = torch.LongTensor({{1, 2, 2, 3},
                                {5, 5, 9, 5}})
 
    tester:eq(matchet.unique(x), torch.LongTensor({1, 2, 3, 5, 9}))
 end
 
-function tests.uniquecount()
+function tests.tensorUniquecount(tester)
    local x = torch.LongTensor({{1, 1, 2, 2},
                                {2, 5, 5, 7},
                                {9, 4, 4, 4}})
@@ -35,3 +37,5 @@ function tests.uniquecount()
    tester:eq(v[7], 1)
    tester:eq(v[9], 1)
 end
+
+return tests

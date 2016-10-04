@@ -1,7 +1,9 @@
 local _ = require 'moses'
 local matchet = require 'matchet'
 
-function tests.set()
+local tests = { }
+
+function tests.setSet(tester)
    local Set = matchet.Set
 
    local s = Set{1, 2, 2, 3}
@@ -46,3 +48,5 @@ function tests.set()
    -- totable
    tester:eq(Set{1, 5, 4, 3, 5}:totable(), {1, 3, 4, 5})
 end
+
+return tests

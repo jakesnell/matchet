@@ -1,12 +1,25 @@
-local matchet = require 'matchet'
+local tester = torch.Tester()
 
-tester = torch.Tester()
-tests = torch.TestSuite()
+local function bindtests(tests)
+   local suite = torch.TestSuite()
+   for k,v in pairs(tests) do
+      suite[k] = function() return v(tester) end
+   end
+   return suite
+end
 
-require 'test.iter'
-require 'test.priorityqueue'
-require 'test.set'
-require 'test.tensor'
-require 'test.seg'
+local function addtests(testfiles)
+   for _,v in ipairs(testfiles) do
+      tester:add(bindtests(require(v)))
+   end
+end
 
-tester:add(tests):run()
+addtests({
+   'test.iter',
+   'test.priorityqueue',
+   'test.set',
+   'test.tensor',
+   'test.seg'
+})
+
+tester:run()

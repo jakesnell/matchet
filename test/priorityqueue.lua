@@ -1,7 +1,9 @@
 local _ = require 'moses'
 local matchet = require 'matchet'
 
-function tests.priorityqueue()
+local tests = { }
+
+function tests.priorityqueuePriorityqueue(tester)
    local pq = matchet.PriorityQueue()
 
    local vals = { }
@@ -24,3 +26,5 @@ function tests.priorityqueue()
    tester:eq(peekresult, inds)
    tester:eq(popresult, inds)
 end
+
+return tests

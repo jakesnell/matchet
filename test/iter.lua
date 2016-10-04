@@ -1,6 +1,8 @@
 local matchet = require 'matchet'
 
-function tests.deepmap()
+local tests = { }
+
+function tests.iterDeepmap(tester)
    local x = {
       a = {1, 2, 3},
       b = {
@@ -26,3 +28,5 @@ function tests.deepmap()
    local result = matchet.deepmap(x, function(v) return v + 2 end)
    tester:eq(result, target)
 end
+
+return tests
