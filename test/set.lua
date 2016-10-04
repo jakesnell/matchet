@@ -1,4 +1,3 @@
-local _ = require 'moses'
 local matchet = require 'matchet'
 
 local tests = { }
