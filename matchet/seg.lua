@@ -64,7 +64,7 @@ matchet.neighborpairs = argcheck{
 
 matchet.spintersection = function(spmats)
    local rval = spmats[1]:clone()
-   local flatrval = rval:view(-1)
+   local flatrval = rval:view(-1):contiguous()
    local npixels = spmats[1]:nElement()
 
    -- check that the spmats are all the same size
@@ -73,49 +73,57 @@ matchet.spintersection = function(spmats)
    end
 
    -- flatten
-   local flatspmats = moses.map(spmats, function(_,v)
-      return v:view(-1)
+   local flatspmat = moses.map(spmats, function(_,v)
+      return v:view(1, -1)
    end)
+   flatspmat = torch.cat(flatspmat, 1):contiguous()
+   local nmats = flatspmat:size(1)
+   local flatspmat_data = torch.data(flatspmat)
 
-   -- walk through the tree according to indseq
-   -- if a value already present, return that, otherwise
-   -- write val + 1 to the entry.
-   local function accumulate(tree, indseq, startind, val)
-      local ind = indseq[startind]
-      if startind == #indseq then
-         if not tree[ind] then
-            tree[ind] = val + 1
-            return tree[ind], val + 1
-         else
-            return tree[ind], val
-         end
-      else
+   local maxind = 0
+
+   local function accumulate(tree, pixelind)
+      -- walk through the tree according to indseq
+      -- if a value already present, return that, otherwise
+      -- write val + 1 to the entry.
+      local ind
+      for startind=1,nmats-1 do
+         ind = tonumber(flatspmat_data[(startind-1)*npixels + pixelind-1])
          if not tree[ind] then
             tree[ind] = tds.Hash()
          end
-         return accumulate(tree[ind], indseq, startind+1, val)
+         tree = tree[ind]
+      end
+
+      ind = tonumber(flatspmat_data[(nmats-1)*npixels + pixelind-1])
+      if not tree[ind] then
+         tree[ind] = maxind + 1
+         maxind = maxind + 1
+         return tree[ind]
+      else
+         return tree[ind]
       end
    end
 
+   local flatrval_data = torch.data(flatrval)
+
    local inds = tds.Hash()
-   local key
-   local maxind = 0
    for j=1,npixels do
-      key = { }
-      for i=1,#spmats do
-         key[i] = flatspmats[i][j]
-      end
-      flatrval[j], maxind = accumulate(inds, key, 1, maxind)
+      flatrval_data[j-1] = accumulate(inds, j)
    end
 
    return rval
 end
 
 matchet.spcounts = function(spmat)
-   local ret = torch.zeros(spmat:max()):long()
-   local flatspmat = spmat:view(-1)
+   local ret = torch.zeros(spmat:max()):long():contiguous()
+   local flatspmat = spmat:view(-1):contiguous()
+
+   local flatspmat_data = torch.data(flatspmat)
+   local ret_data = torch.data(ret)
+
    for i=1,flatspmat:size(1) do
-      ret[flatspmat[i]] = ret[flatspmat[i]] + 1
+      ret_data[flatspmat_data[i-1]-1] = ret_data[flatspmat_data[i-1]-1] + 1
    end
    return ret
 end
