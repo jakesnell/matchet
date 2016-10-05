@@ -51,4 +51,13 @@ function tests.segSpintersection(tester)
                                {11, 11, 12, 12, 13}}))
 end
 
+function tests.segSpcounts(tester)
+   local x = torch.LongTensor({{1, 1, 1, 2, 2},
+                               {1, 1, 2, 2, 3},
+                               {1, 2, 2, 4, 4},
+                               {5, 5, 5, 5, 5}})
+   tester:eq(matchet.spcounts(x),
+             torch.LongTensor({6, 6, 1, 2, 5}))
+end
+
 return tests

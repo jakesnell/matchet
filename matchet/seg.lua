@@ -110,3 +110,12 @@ matchet.spintersection = function(spmats)
 
    return rval
 end
+
+matchet.spcounts = function(spmat)
+   local ret = torch.zeros(spmat:max()):long()
+   local flatspmat = spmat:view(-1)
+   for i=1,flatspmat:size(1) do
+      ret[flatspmat[i]] = ret[flatspmat[i]] + 1
+   end
+   return ret
+end
