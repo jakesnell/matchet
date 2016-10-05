@@ -60,3 +60,53 @@ matchet.neighborpairs = argcheck{
       return torch.cat(ret, 1)
    end
 }
+
+matchet.spintersection = function(...)
+   local spmats = { ... }
+   local rval = spmats[1]:clone()
+   local flatrval = rval:view(-1)
+   local npixels = spmats[1]:nElement()
+
+   -- check that the spmats are all the same size
+   for i=2,#spmats do
+      assert(spmats[i]:isSameSizeAs(spmats[1]))
+   end
+
+   -- flatten
+   local flatspmats = moses.map(spmats, function(_,v)
+      return v:view(-1)
+   end)
+
+   -- walk through the tree according to indseq
+   -- if a value already present, return that, otherwise
+   -- write val + 1 to the entry.
+   local function accumulate(tree, indseq, startind, val)
+      local ind = indseq[startind]
+      if startind == #indseq then
+         if not tree[ind] then
+            tree[ind] = val + 1
+            return tree[ind], val + 1
+         else
+            return tree[ind], val
+         end
+      else
+         if not tree[ind] then
+            tree[ind] = { }
+         end
+         return accumulate(tree[ind], indseq, startind+1, val)
+      end
+   end
+
+   local inds = { }
+   local key
+   local maxind = 0
+   for j=1,npixels do
+      key = { }
+      for i=1,#spmats do
+         key[i] = flatspmats[i][j]
+      end
+      flatrval[j], maxind = accumulate(inds, key, 1, maxind)
+   end
+
+   return rval
+end
