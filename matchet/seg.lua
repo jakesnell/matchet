@@ -1,5 +1,5 @@
 -- utilities for segmentation
-local _ = require 'moses'
+local moses = require 'moses'
 local argcheck = require 'argcheck'
 
 local matchet = require 'matchet.env'
@@ -20,8 +20,8 @@ matchet.neighborpairs = argcheck{
             local right = xdata[(i-1)*rstride+(j)*cstride]
 
             if left ~= right then
-               minind = math.min(tonumber(left), tonumber(right))
-               maxind = math.max(tonumber(left), tonumber(right))
+               local minind = math.min(tonumber(left), tonumber(right))
+               local maxind = math.max(tonumber(left), tonumber(right))
                if not neighbors[minind] then
                   neighbors[minind] = { }
                end
@@ -37,8 +37,8 @@ matchet.neighborpairs = argcheck{
             local bottom = xdata[(i)*rstride+(j-1)*cstride]
 
             if top ~= bottom then
-               minind = math.min(tonumber(top), tonumber(bottom))
-               maxind = math.max(tonumber(top), tonumber(bottom))
+               local minind = math.min(tonumber(top), tonumber(bottom))
+               local maxind = math.max(tonumber(top), tonumber(bottom))
                if not neighbors[minind] then
                   neighbors[minind] = { }
                end
@@ -48,13 +48,13 @@ matchet.neighborpairs = argcheck{
       end
 
       local ret = { }
-      _.each(neighbors, function(i, v)
-         k = _.sort(_.keys(v))
-         _.each(k, function(j, n)
+      moses.each(neighbors, function(i, v)
+         local k = moses.sort(moses.keys(v))
+         moses.each(k, function(_, n)
             local row = torch.LongTensor(1, 2)
             row[{1,1}] = i
             row[{1,2}] = n
-            _.push(ret, row)
+            moses.push(ret, row)
          end)
       end)
       return torch.cat(ret, 1)
