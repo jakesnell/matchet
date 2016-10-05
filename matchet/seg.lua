@@ -1,6 +1,7 @@
 -- utilities for segmentation
 local moses = require 'moses'
 local argcheck = require 'argcheck'
+local tds = require 'tds'
 
 local matchet = require 'matchet.env'
 
@@ -61,8 +62,7 @@ matchet.neighborpairs = argcheck{
    end
 }
 
-matchet.spintersection = function(...)
-   local spmats = { ... }
+matchet.spintersection = function(spmats)
    local rval = spmats[1]:clone()
    local flatrval = rval:view(-1)
    local npixels = spmats[1]:nElement()
@@ -91,13 +91,13 @@ matchet.spintersection = function(...)
          end
       else
          if not tree[ind] then
-            tree[ind] = { }
+            tree[ind] = tds.Hash()
          end
          return accumulate(tree[ind], indseq, startind+1, val)
       end
    end
 
-   local inds = { }
+   local inds = tds.Hash()
    local key
    local maxind = 0
    for j=1,npixels do
