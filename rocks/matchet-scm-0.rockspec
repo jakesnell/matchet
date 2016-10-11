@@ -19,6 +19,7 @@ dependencies = {
    'classic',
    'moses',
    'tds',
+   'torchnet',
    'torchzlib',
    'uuid'
 }
@@ -34,6 +35,7 @@ build = {
       ['matchet.priorityqueue'] = 'matchet/priorityqueue.lua',
       ['matchet.set'] = 'matchet/set.lua',
       ['matchet.tensor'] = 'matchet/tensor.lua',
-      ['matchet.seg'] = 'matchet/seg.lua'
+      ['matchet.seg'] = 'matchet/seg.lua',
+      ['matchet.autogradengine'] = 'matchet/autogradengine.lua'
    }
 }

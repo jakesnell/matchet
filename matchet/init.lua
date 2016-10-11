@@ -23,5 +23,6 @@ require 'matchet.priorityqueue'
 require 'matchet.set'
 require 'matchet.tensor'
 require 'matchet.seg'
+require 'matchet.autogradengine'
 
 return matchet
