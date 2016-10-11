@@ -17,6 +17,7 @@ matchet.union = argcheck{
 }
 
 require 'matchet.uuid'
+require 'matchet.log'
 require 'matchet.iter'
 require 'matchet.data'
 require 'matchet.priorityqueue'
