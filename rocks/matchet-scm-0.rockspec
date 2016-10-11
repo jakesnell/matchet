@@ -19,7 +19,8 @@ dependencies = {
    'classic',
    'moses',
    'tds',
-   'torchzlib'
+   'torchzlib',
+   'uuid'
 }
 
 build = {
@@ -27,6 +28,7 @@ build = {
    modules = {
       ['matchet.env'] = 'matchet/env.lua',
       ['matchet.init'] = 'matchet/init.lua',
+      ['matchet.uuid'] = 'matchet/uuid.lua',
       ['matchet.iter'] = 'matchet/iter.lua',
       ['matchet.data'] = 'matchet/data.lua',
       ['matchet.priorityqueue'] = 'matchet/priorityqueue.lua',
