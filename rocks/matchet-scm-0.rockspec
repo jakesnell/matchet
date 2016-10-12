@@ -16,6 +16,7 @@ description = {
 dependencies = {
    'torch >= 7.0',
    'argcheck',
+   'autograd',
    'classic',
    'logroll',
    'moses',
@@ -38,6 +39,7 @@ build = {
       ['matchet.set'] = 'matchet/set.lua',
       ['matchet.tensor'] = 'matchet/tensor.lua',
       ['matchet.seg'] = 'matchet/seg.lua',
-      ['matchet.autogradengine'] = 'matchet/autogradengine.lua'
+      ['matchet.autogradengine'] = 'matchet/autogradengine.lua',
+      ['matchet.model'] = 'matchet/model.lua'
    }
 }

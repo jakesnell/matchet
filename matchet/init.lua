@@ -25,5 +25,6 @@ require 'matchet.set'
 require 'matchet.tensor'
 require 'matchet.seg'
 require 'matchet.autogradengine'
+require 'matchet.model'
 
 return matchet
