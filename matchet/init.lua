@@ -26,5 +26,6 @@ require 'matchet.tensor'
 require 'matchet.seg'
 require 'matchet.autogradengine'
 require 'matchet.model'
+require 'matchet.vectormeter'
 
 return matchet
